@@ -1,0 +1,81 @@
+<include file="Public/header"/>
+<div class="layui-tab layui-tab-brief main-tab-container">
+    <ul class="layui-tab-title main-tab-title">
+      <a href="{:U('index')}"><li class="layui-this">菜单列表</li></a>
+      <a href="{:U('edit')}"><li>添加菜单</li></a>
+      <a href="javascript:;" onclick="clear_cache('{:U('clear_cache')}','menu')"><li>清除菜单缓存</li></a>
+      <div class="main-tab-item">菜单管理</div>
+    </ul>
+    <div class="layui-tab-content">
+      <div class="layui-tab-item layui-show">
+      <form class="layui-form">
+        <table class="list-table tablelist" id="listTable" data-url="{:U('ajax_edit?table=menu')}">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>名称</th>
+              <th>链接</th>
+              <th width="30">图标</th>
+              <th width="100">左侧导航显示</th>
+              <th width="60">显示</th>
+              <th>排序</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+          <volist name="data" id="vo">
+            <tr>
+              <td>{$vo.id}</td>
+              <td>{$vo.title_show}{$vo.name|get_span=###,$vo['id'],'name'}</td>
+              <td>{$vo.url|get_span=###,$vo['id'],'url'}</td>
+              <td><i class="fa {$vo.icon}"></i></td>
+              <td>{$vo.is_left|get_toggle=###,$vo['id'],'is_left'}</td>
+              <td>{$vo.is_show|get_toggle=###,$vo['id'],'is_show'}</td>
+              <td>{$vo.sort|get_span=###,$vo['id'],'sort'}</td>
+              <td style="text-align: center;">
+              <a href="{:U('edit',array('id'=>$vo['id']))}" class="layui-btn layui-btn-small" title="编辑"><i class="layui-icon"></i></a>
+              <a class="layui-btn layui-btn-small layui-btn-danger del_btn" category-id="{$vo.id}" title="删除" category-name='{$vo.name}'><i class="layui-icon"></i></a>
+              </td>
+            </tr>
+          </volist>
+          </tbody>
+        </table>
+      </form>
+      </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+layui.use(['element', 'layer', 'form'], function(){
+  var element = layui.element()
+  ,jq = layui.jquery
+  ,form = layui.form()
+  ,laypage = layui.laypage;
+
+  //ajax删除
+  jq('.del_btn').click(function(){
+    var name = jq(this).attr('category-name');
+    var id = jq(this).attr('category-id');
+    layer.confirm('确定删除【'+name+'】?', function(index){
+      loading = layer.load(2, {
+        shade: [0.2,'#000'] //0.2透明度的白色背景
+      });
+      jq.post('{:U("delete")}',{'id':id},function(data){
+        if(data.status == 1){
+          layer.close(loading);
+          layer.msg(data.msg, {icon: 6, time: 1000}, function(){
+            location.reload();//do something
+          });
+        }else{
+          layer.close(loading);
+          layer.msg(data.msg, {icon: 5, anim: 6, time: 1000});
+        }
+      });
+    });
+    
+  });
+  
+})
+</script>
+</body>
+</html>

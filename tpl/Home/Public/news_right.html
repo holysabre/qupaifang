@@ -1,0 +1,78 @@
+<php>$c_name = CONTROLLER_NAME;</php>
+<aside class="news_right_side {:$c_name='Subject'?'news_right_side2':''}">
+	<div class="valuation_num">
+		<h3>8,935,992</h3>
+		<p>TA们在去拍房成功买卖</p>
+		<form action="{:U('Evaluation/index')}" method="post" class="evaluation_form">
+		<input name="mobile" type="text" value="请输入您的手机号码"onfocus="if (value =='请输入您的手机号码'){value =''}"onblur="if (value ==''){value='请输入您的手机号码'}"/>
+		<button type="submit">免费估价</button>
+		</form>
+	</div>
+	<div class="deal_list">
+		<div class="deal_list_tit">
+			<i class="iconfont">&#xe62e;</i>
+			<span>最新成交</span>
+		</div>
+		<ul>
+			<php>$newsest_deal = D('Subject')->getDealList();</php>
+			<volist name="newsest_deal" id="vo" offset="0" length="1">
+				<li>
+					<a href="{:U('Subject/detail',array('id'=>$vo['id']))}">
+						<figure>
+							<img src="{$vo.image|get_img}" alt="">
+							<figcaption>
+								<h3>{$vo.title}</h3>
+								<p>{$vo.building_area}平方米  / {$vo.building_address}  /  {$vo.onlook}次围观</p>
+								<span>{$vo.time|date="Y.m.d",###}成交</span>
+								<em>{$vo.deal_price|money_to_wan}万</em>
+								<div class="clear"></div>
+							</figcaption>
+						</figure>
+					</a>
+				</li>
+			</volist>
+		</ul>
+	</div>
+	<if condition="!$c_name">
+		<div class="advertising_mould">
+			<img src="images/advertising.jpg" alt="">
+			<div class="advan_text">
+				广告
+			</div>
+		</div>
+	</if>
+	<div class="recommend">
+		<div class="deal_list_tit recommend_tit">
+			<i class="iconfont">&#xe62e;</i>
+			<span>热门推荐</span>
+		</div>
+		<div class="recommend_list">
+			<ul>
+				<php>$news = D('Article')->getLimitList(array('catid'=>1,'status'=>1,'limit'=>2));</php>
+				<volist name="news" id="vo">
+				<li>
+					<a href="{:U('Article/detail',array('id'=>$vo['id']))}">
+						<div class="recommend_pic">
+							<img src="{$vo.img|get_img}" alt="">
+							<div class="recommend_pic_num">{$i}</div>
+						</div>
+						<div class="recommend_text">
+							<div class="recommend_text_t">
+								<p>
+									<span>{:substr($vo['cate_title'],0,6)}</span>
+									{$vo.title}
+								</p>
+								<div class="clear"></div>
+							</div>
+							<div class="recommend_text_b">
+								{$vo.addtime}
+							</div>
+						</div>
+						<div class="clear"></div>
+					</a>
+				</li>
+				</volist>
+			</ul>
+		</div>
+	</div>
+</aside>

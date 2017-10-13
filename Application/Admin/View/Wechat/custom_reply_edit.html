@@ -1,0 +1,191 @@
+<include file="Public/header"/>
+<div class="layui-tab-brief main-tab-container">
+    <ul class="layui-tab-title main-tab-title">
+      <a href="{:U('custom_reply')}"><li>自定义图文列表</li></a>
+      <a href="{:U('custom_reply_edit')}"><li class="layui-this">添加 / 编辑自定义图文</li></a>
+      <div class="main-tab-item">自定义回复管理</div>
+    </ul>
+    <div class="layui-tab-content">
+      <div class="layui-left">
+        <h4 class="image-text-title">{$info.title|default='标题'}</h4>
+        <div class="image-text-time">{:date('Y-m-d')}</div>
+        <div class="image-text-image" style="background-image: url({:$info['image']?get_img($info['image']):'__PUBLIC__/images/100x100.png'})">
+        </div>
+        <div class="image-text-content">
+          {$info.intro|default='摘要'}
+        </div>
+      </div>
+      <div class="layui-tab-item layui-show layui-right">
+        <form class="layui-form">
+          <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+              
+              <div class="layui-form-item">
+                <label class="layui-form-label">关键词类型</label>
+                <div class="layui-input-inline input-custom-width">
+                  <select name="keyword_type">
+                    <option value="0">顶级栏目</option>
+                    <volist name="keyword_type" id="vo">
+                      <option value="{$vo.id}">{$vo.name}</option>
+                    </volist>
+                  </select>
+                </div>
+                <div class="layui-form-mid layui-word-aux"></div>
+              </div>
+
+              <div class="layui-form-item">
+                <label class="layui-form-label">标题</label>
+                <div class="layui-input-inline input-custom-width">
+                  <input type="text" name="title" value="{$info.title}" autocomplete="off" placeholder="" class="layui-input" onkeyup="change_con(this,'image-text-title')">
+                </div>
+                <div class="layui-form-mid layui-word-aux"></div>
+              </div>
+
+              <div class="layui-form-item">
+                <label class="layui-form-label">关键词</label>
+                <div class="layui-input-inline input-custom-width">
+                  <input type="text" name="keyword" value="{$info.keyword}" autocomplete="off" placeholder="" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">（多个关键词请用空格分开：例如: 高 富 帅）</div>
+              </div>
+
+              <php>
+                $value = $info['image'];
+                $count = count($value)?count($value):0;
+              </php>
+              <div class="layui-form-item">
+                <label class="layui-form-label">封面图片</label>
+                <div class="layui-input-inline input-custom-width" id="image" data-count="1">
+                  <div class="img_container">
+                    <img src="{:get_img($value)}" class="showimg" style="height:100px" />
+                    <a href="javascript:void(0);" class="delOneImg" data-nopic="1">删除</a>
+                    <input type="hidden" name="image" class="hideimg" value="{$value}">
+                  </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"></label>
+                    <div class="goods_swfupload" data-name="image" data-dir="upload" style="width:auto;">
+                    <button type="button" class="layui-btn fa fa-arrow-circle-o-up" id="uploadBtn_image" data-id="image" data-url="{:U('Upload/upload')}" data-file="wechat" data-session="{:session_id()}" data-isalbum="false">上传文件</button>
+                </div>
+                <div id="uploadBtn_image-filelist">Your browser doesn\'t have Flash, Silverlight or HTML5 support.</div>
+                <div class="layui-form-mid layui-word-aux">
+                  （格式为jpg,gif,png.限制为1M内，大图片建议尺寸：900像素 * 500像素）
+                </div>
+              </div>
+              <script>
+                $("#uploadBtn_image").pluploadQueue({
+                  url: "{:U('Upload/upload')}",
+                  multipart_params: { path:"wechat", size:2, ajax:1, sessiocat_id:1, PHPSESSID:"{:session_id()}" },
+                  callSuccess: uploadAfter_wx,
+                });
+                function uploadAfter_wx(result) {
+                  if (result.status == 0) {
+                    layer.msg(result.msg, {icon:5, time:2500});
+                    return false;
+                  }
+                  $("#image .img_container").show();
+                  $("#image").find(".showimg").attr("src", result.data.b);
+                  $("#image").find(".hideimg").val(result.data.b);
+                  //图片上传成功后修改左侧图片路径
+                  $('.image-text-image').css('background-image','url('+result.data.b+')');
+                } 
+              </script>
+
+              <div class="layui-form-item">
+                <label class="layui-form-label">正文</label>
+                <div class="layui-input-inline input-custom-width">
+                  <textarea name="content" id="content" style="width:500px;max-width:500px;height:300px;">{$info.content}</textarea>
+                </div>
+                <div class="layui-form-mid layui-word-aux"></div>
+              </div>
+              <script type="text/javascript">
+                var editor = new wangEditor(content);
+                wangEditor.config.printLog = false;
+                editor.config.uploadImgUrl = "{:U('Upload/editorUpload',array('path'=>'editor'))}";
+                editor.config.uploadImgFileName = "imgFile";
+                editor.config.hideLinkImg = false;
+                editor.create();
+              </script>
+
+              <div class="layui-form-item">
+                <label class="layui-form-label">摘要</label>
+                <div class="layui-input-inline input-custom-width">
+                  <textarea name="intro" autocomplete="off" placeholder="" class="layui-textarea" onkeyup="change_con(this,'image-text-content')">{$info.intro}</textarea>
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                  （选填，如果不填写会默认抓取正文前54个字）
+                </div>
+              </div>
+
+              <div class="layui-form-item">
+                <label class="layui-form-label">外链</label>
+                <div class="layui-input-inline input-custom-width">
+                  <input type="text" name="jump_url" value="{$info.jump_url}" autocomplete="off" placeholder="" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                  （如需跳转填写网址(记住必须有http://)如果填写了图文详细内容，这里请留空，不要设置！）
+                </div>
+              </div>
+
+              <div class="layui-form-item">
+                <label class="layui-form-label">排序</label>
+                <div class="layui-input-inline input-custom-width">
+                  <input type="text" name="sort" value="{$info.sort|default=100}" autocomplete="off" placeholder="" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">数字越小越靠前</div>
+              </div>
+
+
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                <input type="hidden" name="id" value="{$info.id}"/>
+                <input type="hidden" name="type" value="reply" />
+                <button class="layui-btn" lay-submit="" lay-filter="form_submit">保存</button>
+              </div>
+            </div>
+          </div>
+          
+        </form>
+      </div>
+      <div class="clear"></div>
+    </div>
+</div>
+<script type="text/javascript">
+layui.use(['element', 'form', 'layedit','laydate'], function(){
+  var element = layui.element()
+  ,form = layui.form()
+  ,jq = layui.jquery;
+  
+  //监听提交
+  form.on('submit(form_submit)', function(data){
+    loading = layer.load(2, {
+      shade: [0.2,'#000'] //0.2透明度的白色背景
+    });
+    var param = data.field;
+    jq.post('{:url("edit")}',param,function(data){
+      if(data.status == 1){
+        layer.close(loading);
+        layer.msg(data.msg, {icon: 1, time: 1000}, function(){
+          location.reload();//do something
+        });
+      }else{
+        layer.close(loading);
+        layer.msg(data.msg, {icon: 2, anim: 6, time: 1000});
+      }
+    });
+    return false;
+  });
+  
+})
+
+function change_con(obj,_class){
+  var value = $(obj).val();
+  $('.'+_class).text(value);
+}
+
+
+</script>
+</body>
+</html>
+

@@ -1,0 +1,142 @@
+<include file="public/header"/>
+<script type="text/javascript" src="__PUBLIC__/js/scrollLoading.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.imgpreview.js"></script>
+<script type="text/javascript">
+$(function(){
+    $('#imgPreview img[rel]').size() && $('#imgPreview img[rel]').imgPreview({
+        srcAttr: 'rel',
+        imgCSS: { border:'1px solid #ccc', background:'#ffffff', 'max-width':'300px', padding:'2px'}
+    });
+});
+</script>
+<style type="text/css">
+#imgPreviewContainer{z-index:11}
+body{font-size:12px}
+ul,li{list-style:none}
+.red{color:red;font-weight:bold}
+.pd-10{position:relative;padding:10px}
+.mt-10{margin-top:10px}
+.pic{padding-bottom:40px}
+.pic li{float:left;margin:0 10px 10px 0;border:5px solid #eeeeee;cursor:pointer}
+.pic li.on{border:5px solid #1e8cbe}
+.pic li a{display:block;text-decoration:none}
+.pic li.dir{text-align:center;background:#eee}
+.pic li.dir a{padding:10px}
+.pic li.file{position:relative;width:260px;height:192px;overflow:hidden;text-align:center}
+.pic li.file img{max-width:100%;min-height:32px}
+.pic li div{width:100%;padding:3px 0;line-height:24px;word-wrap:break-word;/*overflow:hidden;*/}
+.pic li div.number{position:absolute;top:0;left:0;background:#333333;color:#ffffff;width:30px;height:30px;text-align:center;z-index:10}
+.pic li div.name{display:none;position:absolute;bottom:0;left:0;background:rgba(0,0,0,0.6);color:#ffffff;z-index:10}
+.pic li div.name a{display:inline-block;color:#ffffff}
+.hui{background:#000;filter:alpha(opacity=30);-moz-opacity:0.3;opacity:0.3}
+.pic li:hover div.name{display:block;}
+#fixed{width:98%;position:fixed;left:15px;bottom:10px;background:#ffffff;font-size:14px}
+#fixed #confirm{width:150px}
+.load{background:url(__PUBLIC__/images/loading.gif) no-repeat center}
+
+@media screen and (max-width:810px){
+    .pic li.file{width:150px;height:110px;}
+}
+</style>
+</head>
+
+<body>
+<div class="pd-10">
+    <a href="javascript:location.reload()" class="layui-btn layui-btn-normal">刷新列表</a>
+    <a href="{:U($ulink.'&path='.$data['moveup_dir_path'])}" class="layui-btn layui-btn-normal">返回上一层</a>
+	<span class="red">注意选择图片, _s.jpg、_m.jpg皆为小图.请勿选择小图</span>
+    <if condition="$data['file_list']">
+    <div class="pic mt-10" style="min-height:250px;" id="imgPreview">
+        <ul class="clearfix">
+            <volist name="data.file_list" id="vo"><if condition="$vo['is_dir']">
+            <li class="dir"><a href="{:U($ulink.'&path='.$data['current_dir_path'].$vo['filename'].'/')}" title="{$vo.filename}"><img src="Static/images/folder.png" style="width:80px;" /><div>{$vo.filename}</div></a></li>
+            <else/><php>
+            $size  = round($vo['filesize'] / 1024, 2);
+            $title = $vo['filename'] . ' (' . $size . 'KB, ' . $vo['edittime'] . ')';
+            $font  = ''; $class  = '';
+            if (strpos($vo['filename'],'_s.jpg') !== false || strpos($vo['filename'],'_m.jpg') !== false) { 
+                $font = '小图'; $class = 'hui'; 
+            }
+            </php>
+            <li class="file" data-json='{$vo.filejson}'>
+                <if condition="$vo['is_photo']">
+                <div class="number">{$i}</div>
+                <img src="" title="{$title}" class="load lazys {$class}" data-url="{:$data['current_url'].$vo['filename']}" rel="{:$data['current_url'].$vo['filename']}" /><else/>
+                <img src="Static/images/file.png" title="{$title}"/>
+                </if>
+                <div class="name" title="{$title}"><a href="javascript:void(0);" onclick="delete_file(this)">删</a><strong class="c-red">&nbsp;&nbsp;{$font}</strong></div>
+            </li>
+            </if></volist>
+          </ul>
+    </div>
+    <else/>
+    <div style="min-height:270px;text-align:center"><h1>aOh! 该目录下暂时还没有文件!</h1></div>
+    </if>
+    <div id="fixed"><input type="button" id="confirm" class="layui-btn" value="确&nbsp;&nbsp;&nbsp;认" /> {$data['current_dir_path']}</div>
+</div>
+<script type="text/javascript">
+function delete_file(obj) {
+    var t = $(obj),
+        dataurl = t.parent().prev("img").attr("data-url");
+
+    if (confirm("确定要删除")) {
+        $.getJSON("{:U('base/imagemanagerdelete')}", {file:dataurl}, function(result){
+            if(result.status == 0) {
+                layer.msg(result.message, {icon:5, time:2500});
+            } else {
+                t.closest("li").fadeOut(1000);
+            }
+        });
+        
+    }
+    return false;
+}
+$(function(){
+    $(".pic img.lazys").scrollLoading();
+    <if condition="$multi eq 'one'">
+    $(".pic li").click(function() {
+        $(this).siblings().removeClass('on');
+        $(this).addClass('on');
+    });
+
+    $("#confirm").click(function() {
+        if ($("li.on").length <= 0) {
+            return false;
+        }
+        $("li.on").each(function(index, element) {
+            var data = $.parseJSON("{" + $(this).attr("data-json") + "}");
+            addImage{$Imagename}(data, "{$Imagename}");
+        });
+        //假设这是iframe页
+        var indexselect = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+        parent.layer.close(indexselect); //再执行关闭     
+    });
+    <else/>
+    $(".pic li").click(function() {
+        $(this).toggleClass('on');
+    });
+
+    $("#confirm").click(function() {
+        if ($("li.on").length <= 0) {
+            return false;
+        }
+        $("li.on").each(function(index, element) {
+            data = $.parseJSON("{" + $(this).attr("data-json") + "}");
+            addImage{$Imagename}(data, "{$Imagename}");
+        });
+        /*var data = '';
+        $("li.on").each(function(index, element) {
+            data += "{" + $(this).attr("data-json") + "},";
+        });
+        data = data.replace(/(,*$)/g, "");
+        data = $.parseJSON("["+data+"]");
+        window.parent.uploadBtn_{$Imagename}(data, "");*/
+        //假设这是iframe页
+        var indexselect = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+        parent.layer.close(indexselect); //再执行关闭     
+    });
+    </if>
+})
+</script>
+</body>
+</html>

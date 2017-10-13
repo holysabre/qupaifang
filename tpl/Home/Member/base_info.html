@@ -1,0 +1,219 @@
+﻿<!doctype html>
+<html class="no-js">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><!--读取IE最新渲染-->
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<title>去拍房</title>
+<include file="Home/Public/load"/>
+<link rel="stylesheet" href="__PUBLIC__/layui/css/layui.css">
+<script type="text/javascript" src="__PUBLIC__/layui/layui.js"></script>
+</head>
+
+<body class="public_color">
+<include file="Home/Public/header"/>
+<section class="secondhand_side">
+	<div class="secondhand_tit">
+		<i class="iconfont">&#xe69e;</i>
+		<a href="{:U('Index/index')}">首页</a> <i class="iconfont">&#xe60d;</i>
+		<a href="{:U('Member/index')}">我的账户</a><i class="iconfont">&#xe60d;</i>
+		<a href="{:U('Member/base_info')}">个人资料</a><i class="iconfont">&#xe60d;</i>
+		基本信息
+	</div>
+	<div class="secondhand_side_info">
+		<include file="Home/Member/member_nav"/>
+		<article class="basic_info_right">
+			<div class="basic_info_right_tit">
+				<ul>
+					<li class="basic_sub">
+						<a href="{:U('Member/base_info')}">
+							基本信息
+						</a>
+					</li>
+					<li>
+						<a href="{:U('Member/password')}">
+							修改密码
+						</a>
+					</li>
+					<li>
+						<a href="{:U('Member/pay_password')}">
+							支付密码
+						</a>
+					</li>
+				</ul>
+				<div class="clear"></div>
+			</div>
+			<div class="basic_info_side">
+				<div class="basic_info_s_t">
+					<div class="basic_info_s_t_photo">
+						<figure>
+							<img src="{$info.head_img|get_img}" alt="" class="head_pic">
+							<figcaption>
+								<a href="javascript:;" class="update_img" id="uploadBtn_head_pic" data-id="head_pic" data-url="{:U('Upload/upload')}" data-ajax="{:U('Member/update_head_img')}" data-class="head_pic" data-file="head_pic" data-session="{:session_id()}">更换头像</a>
+								<div id="uploadBtn_head_pic-filelist">Your browser doesn\'t have Flash, Silverlight or HTML5 support.</div>
+							</figcaption>
+						</figure>
+					</div>
+					<div class="basic_info_s_t_wel">
+						<p>
+							亲爱的 <span>{$info.name|default=$info['username ']}</span>，您好，欢迎来到去拍房！
+						</p>
+						<em>登录次数：共{$info.login_times}次</em>
+						<em>上次登录：{$info.login_time|date="Y-m-d H:i:s",###}</em>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<form action="{:U('Member/base_info')}" method="post" class="layui-form baseinfo_form">
+				<if condition="$info.is_complete eq 0">
+				<div class="basic_info_s_m">
+					<h3>安全设置</h3>
+					<div class="basic_info_s_m_side">
+						<ul>
+							<li>
+								<label>
+									设置密码：
+								</label>
+								<input type="password" name="password">
+								<span>*登录密码，字母与数字下划线等组合</span>
+								<div class="clear"></div>
+							</li>
+							<li>
+								<label>
+									确认密码：
+								</label>
+								<input type="password" name="repassword">
+								<span>*请再次输入密码</span>
+								<div class="clear"></div>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="basic_info_s_m">
+					<h3>支付设置</h3>
+					<div class="basic_info_s_m_side">
+						<ul>
+							<li>
+								<label>
+									设置密码：
+								</label>
+								<input type="password" name="pay_password">
+								<span>*登录密码，字母与数字下划线等组合</span>
+								<div class="clear"></div>
+							</li>
+							<li>
+								<label>
+									确认密码：
+								</label>
+								<input type="password" name="re_pay_password">
+								<span>*请再次输入密码</span>
+								<div class="clear"></div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				</if>
+
+				<div class="basic_info_s_b">
+					
+					<h3>个人信息</h3>
+					<ul>
+						<li class="mobile">
+							<span>手机号：</span>
+							<input type="text" name="mobile" value="{$info.mobile}" readonly="true">
+							<div class="clear"></div>
+						</li>
+						<li class="name">
+							<span>真实姓名：</span>
+							<input type="text" name="name" value="{$info.name}">
+							<div class="clear"></div>
+						</li>
+						<li class="gender">
+							<span>性别：</span>
+					    	<input type="radio" name="sex" value="男" title="男" {$info['sex']=='男'?'checked=""':''}>
+					        <input type="radio" name="sex" value="女" title="女" {$info['sex']=='女'?'checked=""':''}>
+							<div class="clear"></div>
+						</li>
+						<div class="clear"></div>
+						<li class="time">
+							<span>生日：</span>
+							<input name="birthday" value="{$info.birthday}" class="layui-input" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD'})">
+							<div class="clear"></div>
+						</li>
+						<li class="residence">
+							<span>居住地：</span>
+				    		<div class="residence_address">
+				    			<select name="province" lay-filter="province">
+					    			<option></option>
+					    		</select>
+				    		</div>
+				    		<div class="residence_address">
+					    		<select name="city" lay-filter="city">
+					    			<option></option>
+					    		</select>
+					    	</div>
+					    	<div class="residence_address">
+					    		<select name="area" lay-filter="area">
+					    			<option></option>
+					    		</select>
+				    		</div>
+				            <input class="residence_info" name="address" type="text" value="{$info.address|default='详细地址'}" onfocus="if (value =='详细地址'){value =''}"onblur="if (value ==''){value='详细地址'}"/>
+							<div class="clear"></div>
+						</li>
+						<li class="certificates">
+							<span>有效证件：</span>
+							<div class="certificates_select">
+								<select name="certificates_type">
+									<option value="身份证" {$info['certificates_type']=='身份证'?'selected=""':''}>身份证</option>
+									<option value="驾驶证" {$info['certificates_type']=='驾驶证'?'selected=""':''}>驾驶证</option>
+								</select>
+							</div>
+							<input class="residence_info" name="certificates_number" type="text" value="{$info.certificates_number|default='证件号'}" onfocus="if (value =='证件号'){value =''}"onblur="if (value ==''){value='证件号'}"/>
+							<div class="clear"></div>
+						</li>
+					</ul>
+					<div class="button_at">
+						<input type="hidden" name="id" value="{$info.id}"/>
+						<button class="preservate" type="submit">保存</button>
+						<button class="reset" type="reset">重置</button>
+					</div>
+					
+				</div>
+				</form>
+			</div>
+		</article>
+		<div class="clear"></div>
+	</div>
+</section>
+
+<include file="Home/Public/footer"/>
+<script type="text/javascript" src="js/citys.js"></script>
+<script>
+	layui.use(['element', 'form', 'laydate'], function(){
+	  var element = layui.element()
+	  ,form = layui.form()
+	  
+	  pca.init('select[name=province]', 'select[name=city]', 'select[name=area]',"浙江","台州","椒江区");
+	})
+</script>
+<script>
+	$(".baseinfo_form").Validform({
+	    tiptype:function(msg,o,cssctl){
+	        if (o.type == 3)
+	        layer.msg(msg, {icon:5});
+	    },
+	    ajaxPost:true,
+	    callback:function(result){
+	    	//console.log(result);
+	        if(result.status == 1){
+	            layer.msg(result.msg, {icon:6}, function(){ 
+	                location.reload();
+	            });
+	        } else {
+	            layer.msg(result.msg, {icon:5});
+	        }
+	    }
+	});
+</script>
+</body>
+</html>

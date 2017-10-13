@@ -1,0 +1,139 @@
+﻿<!doctype html>
+<html class="no-js">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><!--读取IE最新渲染-->
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<title>去拍房</title>
+<include file="Home/Public/load"/>
+</head>
+
+<body class="public_color">
+<include file="Home/Public/header"/>
+<section class="secondhand_side">
+	<div class="secondhand_tit">
+		<i class="iconfont">&#xe69e;</i>
+		<a href="{:U('Index/index')}">首页</a> <i class="iconfont">&#xe60d;</i>
+		<a href="{:U('Member/index')}">我的账户</a><i class="iconfont">&#xe60d;</i>
+		<a href="{:U('Member/shelves')}">拍售</a><i class="iconfont">&#xe60d;</i>
+		我要出售
+	</div>
+	<div class="secondhand_side_info">
+		<include file="Home/Member/member_nav"/>
+		<article class="basic_info_right">
+			<div class="basic_info_right_tit">
+				<ul>
+					<li class="basic_sub">
+						<a href="{:U('Member/sell')}">
+							我要出售
+						</a>
+					</li>
+					<li>
+						<a href="{:U('Member/shelves')}">
+							上架标的
+						</a>
+					</li>
+					<li>
+						<a href="{:U('Member/sell_deal')}">
+							标的成交
+						</a>
+					</li>
+				</ul>
+				<div class="clear"></div>
+			</div>
+			<div class="basic_info_side sell_side">
+				<div class="sell_s_tit">
+					<ul>
+						<li class="sell_click">
+							<a href="javascript:;">
+								<div class="sell_sst_icon">
+									<i class="iconfont">&#xe60a;</i>
+								</div>
+								<p>1.阅读并同意服务协议</p>
+							</a>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<div class="sell_sst_icon">
+									<i class="iconfont">&#xe610;</i>
+								</div>
+								<p>2.填写房屋基本信息</p>
+							</a>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<div class="sell_sst_icon">
+									<i class="iconfont">&#xe64b;</i>
+								</div>
+								<p>3.核对出售合同</p>
+							</a>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<div class="sell_sst_icon">
+									<i class="iconfont">&#xe634;</i>
+								</div>
+								<p>4.提交平台审核</p>
+							</a>
+						</li>
+					</ul>
+				</div>	
+				<form action="{:U('Member/sell')}" method="post" class="agreement_form">
+				<div class="agreement">
+					<div class="agreement_tit">
+						<h3>服务协议</h3>
+					</div>
+					<div class="agreement_info">
+						<p>
+							一、本须知遵循公平、公正、公开原则，竞买人应认真仔细阅读，了解本须知的全部内容，并对自己的行为承担法律责任。
+							<p>二、凡具备完全民事行为能力的公民、法人和其他组织均可参加竞买。</p>
+							<p>三、本次拍卖活动设置延时出价功能，在竞买活动结束前，最后5分钟之内如果有竞买人出价，就自动延迟5分钟。（重要提示：在手机站或PC站参与竞拍的竞买人在拍品竞拍结束前最后五分钟内请多刷新页面，以防止其他竞买人触发延时功能而错失成功竞拍。）</p>
+							<p>四、保证金：竞买人需在竞买结束前完成报名缴纳保证金。保证金缴纳户名：三门银城房产销售代理有限公司；开户银行：中国邮政储蓄银行股份有限公司三门县支行；账号：《933005010018978888》。保证金缴纳台头请注明拍品编号（编号：PFC***）</p>
+							<p>五、锁定期限：如果竞买成功，竞买成功的竞买人保证金将转为购房定金，抵扣购房款，其余竞价不成功的竞买人保证金在3个工作日内予以返还。如果流拍或无人出价，则所有竞买人保证金在3个工作日内予以返还。保证金不计息。
+							<p>六、保证金适用：保证金适用《中华人民共和国合同法》定金罚则。对成功买卖的房地产保证金即时转为履约定金，如违约，竞买人不得索取已经支付的定金。</p>
+							<p>七、三门拍房网对拍卖标的物所作的说明和提供的资料、图片等，仅供竞买人参考，不构成对标的物的任何担保。所以请竞买人在竞买之前必须仔细审查拍卖标的物，调查是否存在瑕疵，认真研究查看所竞买标的物的实际情况，并请亲临现场实地查看，未实地查看的竞买人视为对本标的实物现状的确认，慎重决定竞买行为，竞买人一旦作出竞买决定，即表明已完全了解，并接受标的物的现状和一切已知及未知的瑕疵。</p>
+							<p>八、本次竞买活动计价货币为人民币，起拍价、成交价均不含买受人在竞买标的物交割、过户时所发生的全部费用和税费。</p>
+							<p>九、本标的物是设起拍价的增价竞买方式，竞买者在限定时间内出价高于(不低于)起拍价方可成交。成交后，出卖人和竞买人必须于5个工作日内到平台指定地点（三门县海游街道平海路31号）签订《房地产（不动产）买卖合同》，其后，按照合同约定办理购房款支付与房地产（不动产）交割事宜。标的支持贷款支付尾款。</p>
+							<p>十、标的物交割、过户时所发生的税费、过户所需费等，竞买人只需承担自已部分。</p>
+							<p>十一、违约责任，拍品成交之后，竞买人不得反悔，竞买人如反悔，三门拍房网平台有权将保证金（定金）没收，若拍品再行上架拍卖，原竞买人禁止参加。</p>
+							<p>十二、参加竞买的人应当遵守拍卖须知的规定，不得阻挠其他竞买人竞拍，不得操纵、垄断竞拍价格，严禁竞买人恶意串标，上述行为一经发现，将取消其竞买资格，并追究相关的法律责任。
+							本规则其他未尽事宜，请向三门拍房网客服咨询。
+							咨询电话：0576-83497877
+						</p>
+					</div>
+					
+				</div>
+				<div class="sell_button">
+					<input type="hidden" name="is_agreement" value="1"/>
+					<button type="submit">已阅读并同意协议</button>
+				</div>
+				</form>
+			</div>
+		</article>
+		<div class="clear"></div>
+	</div>
+</section>
+
+<include file="Home/Public/footer"/>
+<script>
+	$(".agreement_form").Validform({
+	    tiptype:function(msg,o,cssctl){
+	        if (o.type == 3)
+	        layer.msg(msg, {icon:5});
+	    },
+	    ajaxPost:true,
+	    callback:function(result){
+	    	//console.log(result);
+	        if(result.status == 1){
+	            layer.msg(result.msg, {icon:6}, function(){ 
+	                location.href=result.url;
+	            });
+	        } else {
+	            layer.msg(result.msg, {icon:5});
+	        }
+	    }
+	});
+</script>
+
+</body>
+</html>

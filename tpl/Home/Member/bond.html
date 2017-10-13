@@ -1,0 +1,126 @@
+﻿<!doctype html>
+<html class="no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><!--读取IE最新渲染-->
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<title>去拍房</title>
+	<include file="Home/Public/load"/>
+
+</head>
+
+<body class="public_color">
+	<include file="Home/Public/header"/>
+	<section class="secondhand_side">
+		<div class="secondhand_tit">
+			<i class="iconfont">&#xe69e;</i>
+			<a href="{:U('Index/index')}">首页</a> <i class="iconfont">&#xe60d;</i>
+			<a href="{:U('Member/index')}">我的账户</a><i class="iconfont">&#xe60d;</i>
+			<a href="{:U('Member/account')}">个人账户</a><i class="iconfont">&#xe60d;</i>
+			保证金
+		</div>
+		<div class="secondhand_side_info">
+			<include file="Home/Member/member_nav"/>
+			<article class="basic_info_right">
+				<div class="basic_info_right_tit">
+					<ul>
+						<li>
+							<a href="{:U('Member/account')}">
+								我的账户信息
+							</a>
+						</li>
+						<li>
+							<a href="{:U('Member/recharge')}">
+								我要充值
+							</a>
+						</li>
+						<li>
+							<a href="{:U('Member/withdrawals')}">
+								我要提现
+							</a>
+						</li>
+						<li class="basic_sub">
+							<a href="{:U('Member/bond')}">
+								保证金
+							</a>
+						</li>
+					</ul>
+					<div class="clear"></div>
+				</div>
+				<div class="basic_info_side account_side">
+					<div class="transaction">
+						<div class="transaction_tit">
+							<span>最近交易记录</span>
+							<a href="">
+								保证金冻结  
+							</a>
+							<a href="">
+								保证金扣除
+							</a>
+							<a href="">
+								保证金解冻
+							</a>
+							<a href="">
+								保证金退还
+							</a>
+							<div class="clear"></div>
+						</div>
+
+						<div class="bond_list">
+							<div class="bond_tit">
+								<ul>
+									<li class="time">时间</li>
+									<li class="bond_info">缴纳说明</li>
+									<li class="bond_pri">保证金金额</li>
+									<li class="bond_name">标的名称</li>
+									<li class="state">状态</li>
+								</ul>
+								<div class="clear"></div>
+							</div>
+							<div class="bond_list_info">
+								<ul>
+									<li>
+										<span class="time_in">2016-06-15</span>
+										<span class="bond_info_in">冻结</span>
+										<b class="bond_pri_in">+10000.00</b>
+										<span class="bond_name_in">三门赛格特小区 PFC013</span>
+										<span class="state_in">交易成功</span>
+										<div class="clear"></div>
+									</li>
+									<li>
+										<span class="time_in">2016-06-15</span>
+										<span class="bond_info_in">解冻</span>
+										<b class="bond_pri_in">+10000.00</b>
+										<span class="bond_name_in">三门赛格特小区 PFC013</span>
+										<span class="state_in">交易成功</span>
+										<div class="clear"></div>
+									</li>
+									<li>
+										<span class="time_in">2016-06-15</span>
+										<span class="bond_info_in">扣除</span>
+										<b class="bond_pri_in">+10000.00</b>
+										<span class="bond_name_in">三门赛格特小区 PFC013</span>
+										<span class="state_in">交易成功</span>
+										<div class="clear"></div>
+									</li>
+									<li>
+										<span class="time_in">2016-06-15</span>
+										<span class="bond_info_in">退还</span>
+										<b class="bond_pri_in">+10000.00</b>
+										<span class="bond_name_in">三门赛格特小区 PFC013</span>
+										<span class="state_in">交易成功</span>
+										<div class="clear"></div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</article>
+			<div class="clear"></div>
+		</div>
+	</section>
+
+	<include file="Home/Public/footer"/>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<include file="Public/header"/>
+<div class="layui-tab layui-tab-brief main-tab-container">
+  <ul class="layui-tab-title main-tab-title">
+    <a href="{:U('index')}"><li>管理员列表</li></a>
+    <a href="{:U('edit')}"><li>添加 / 编辑管理员</li></a>
+    <a href="{:U('role')}"><li class="layui-this">角色列表</li></a>
+    <a href="{:U('role_edit')}"><li>添加 / 编辑角色</li></a>
+    <div class="main-tab-item">管理员管理</div>
+  </ul>
+  <div class="layui-tab-content">
+    <div class="layui-tab-item layui-show">
+    <form class="layui-form">
+      <table class="list-table tablelist" id="listTable" data-url="{:U('ajax_edit?table=admin_role')}">
+        <thead>
+          <tr>
+            <th width="50">ID</th>
+            <th width="100">名称</th>
+            <th width="60">说明</th>
+            <th>节点</th>
+            <th width="200">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+        <volist name="data" id="vo">
+          <tr>
+            <td>{$vo.id}</td>
+            <td>{$vo.name}</td>
+            <td>{$vo.remark}</td>
+            <td>{$vo.nodes}</td>
+            <td style="text-align: center;">
+            <a href="{:U('role_edit',array('id'=>$vo['id']))}" class="layui-btn layui-btn-small" title="编辑"><i class="layui-icon"></i></a>
+            <if condition="$vo.is_system neq 1">
+              <a class="layui-btn layui-btn-small layui-btn-danger del_btn" data-id="{$vo.id}" title="删除" data-name='{$vo.name}'><i class="layui-icon"></i></a>
+            </if>
+            </td>
+          </tr>
+        </volist>
+        </tbody>
+      </table>
+    </form>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+layui.use(['element', 'layer', 'form'], function(){
+  var element = layui.element()
+  ,jq = layui.jquery
+  ,form = layui.form()
+  ,laypage = layui.laypage;
+
+  //ajax删除
+  jq('.del_btn').click(function(){
+    var name = jq(this).attr('data-name');
+    var id = jq(this).attr('data-id');
+    layer.confirm('确定删除【'+name+'】?', function(index){
+      loading = layer.load(2, {
+        shade: [0.2,'#000'] //0.2透明度的白色背景
+      });
+      jq.post('{:U("deleteRole")}',{'id':id},function(data){
+        if(data.status == 1){
+          layer.close(loading);
+          layer.msg(data.msg, {icon: 1, time: 1000}, function(){
+            location.reload();//do something
+          });
+        }else{
+          layer.close(loading);
+          layer.msg(data.msg, {icon: 2, anim: 6, time: 1000});
+        }
+      });
+    });
+    
+  });
+  
+})
+</script>
+</body>
+</html>

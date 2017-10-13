@@ -1,0 +1,139 @@
+.contract_all{
+	background:rgba(0,0,0,.4);
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	left:0;
+	top:0;
+	z-index: 99;
+	overflow-y: scroll;
+
+}
+.contract_center{
+	width: 1190px;
+	/*height: 1684px;*/
+	margin:0 auto;
+	padding:75px;
+	background: #fff;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.contract_center p{
+	font-size: 22px;
+	font-family: "SimSun";
+	line-height: 40px;
+}
+.contract_all::-webkit-scrollbar {  
+  width: 14px;  
+  height: 14px;  
+}  
+  
+.contract_all::-webkit-scrollbar-track,  
+::-webkit-scrollbar-thumb {  
+  border-radius: 999px;  
+  border: 5px solid transparent;  
+}  
+  
+.contract_all::-webkit-scrollbar-track {  
+  box-shadow: 1px 1px 5px rgba(255,255,255,.2) inset;  
+}  
+  
+.contract_all::-webkit-scrollbar-thumb {
+  min-height: 20px;
+  background-clip: content-box;
+  box-shadow: 0 0 0 5px rgba(255,255,255,.2) inset;
+}  
+  
+.contract_all::-webkit-scrollbar-corner {  
+  background: transparent;  
+} 
+
+.ff4e4e {
+	color: #ff4e4e;
+}
+.ff0000 {
+	color: #ff0000;
+}
+.tdund {
+	color: #ff4e4e;
+}
+
+p.nom{
+	font-size:32px;
+	padding:62px 0 65px;
+}
+p.nom2{
+	padding-bottom: 30px;
+	text-decoration: underline;
+}
+.contract_center ol li{
+	font-size: 22px;
+	font-family: "SimSun";
+	line-height: 40px;
+}
+p.nom3{
+	padding-bottom: 10px;
+	padding-top: 30px;
+}
+p.nom4{
+	padding-bottom: 8px;
+}
+.determine{
+	text-align: center;
+	background: #fff;
+}
+.determine button{
+	line-height: 80px;
+	background:none;
+	color: #fff;
+	cursor: pointer;
+	width: 100%;
+	font-family: "SimSun";
+	width: 300px;
+	margin:0 auto;
+	text-align: center;
+	border-radius: 0.5rem;
+	font-size: 30px;
+	background: #ff9341;
+	display: block;
+}
+.determine a{
+	font-size: 22px;
+	font-family: "SimSun";
+	text-align: center;
+	color: #444;
+	padding-top: 60px;
+	text-decoration: underline;
+	display: block;
+}
+p.nom5{
+	text-indent: 2em;
+}
+.cq img{
+	padding-top: 20px;
+
+}
+p.nom6{
+	padding: 50px 0;
+}
+table td{
+	padding:0 10px;
+}
+table td span{
+	width: 145px;
+	display: inline-block;
+}
+table td img{
+	vertical-align: baseline;
+	padding-right: 10px;
+}
+span.homecol{
+	color: #ff4e4e;
+}
+span.homecol2 img{
+	display: none;
+}
+span.homecol2{
+	color: #444;
+}
